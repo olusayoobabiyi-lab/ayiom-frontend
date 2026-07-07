@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+  body {
+    @apply bg-background text-slate-900 antialiased font-sans;
+  }
+}
+
+/* ─── React Calendar ─── */
+
+.react-calendar {
+  width: 100%;
+  border: none;
+  font-family: inherit;
+}
+
+.react-calendar__navigation button {
+  color: #991b1b;
+  font-weight: bold;
+}
+
+.react-calendar__tile--active {
+  background: #991b1b !important;
+  color: white !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now {
+  background: #fde68a !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile:hover {
+  background: #f3f4f6 !important;
+}
+
+/* Calendar event dots */
+
+.react-calendar__tile {
+  position: relative;
+}
+
+.calendar-dot-container {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.calendar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.calendar-dot--outreach {
+  background-color: #16a34a;
+}
+
+.calendar-dot--prayer {
+  background-color: #D4AF37;
+}
+
+.calendar-dot--widows {
+  background-color: #dc2626;
+}
+
+.calendar-dot--school {
+  background-color: #2563eb;
+}
+
+/* ─── Animations ─── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
