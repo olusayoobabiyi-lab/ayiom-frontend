@@ -13,16 +13,16 @@ export default function GivePage() {
   };
 
   const localAccount = {
-    bank: "Zenith Bank",
-    name: "Amend Your Ways Int'l Outreach Ministry",
-    number: "1012345678",
+    bank: "United Bank for Africa (UBA)",
+    name: "Amend Your Ways Intl Outreach Ministry",
+    number: "1029664301",
   };
 
   const usdAccount = {
-    bank: "Zenith Bank (USD)",
-    name: "Amend Your Ways Int'l Outreach Ministry",
-    number: "5078901234",
-    swift: "ZENEFTGDXXX",
+    bank: "United Bank for Africa (UBA) (USD)",
+    name: "Amend Your Ways Intl Outreach Ministry",
+    number: "3005031473",
+    // swift: "ZENEFTGDXXX",
   };
 
   return (
@@ -50,7 +50,9 @@ export default function GivePage() {
               GIVE & SUPPORT
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              Your generosity fuels our mission. Through your tithes, offerings, and partnership seeds, we are able to reach out to widows, orphans, and less privileged families, and spread the Gospel of Jesus Christ globally.
+              Your generosity fuels our mission. Through your tithes, offerings, and partnership
+              seeds, we are able to reach out to widows, orphans, and less privileged families, and
+              spread the Gospel of Jesus Christ globally.
             </p>
           </motion.div>
         </div>
@@ -71,27 +73,25 @@ export default function GivePage() {
       {/* Main Account details Section */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-start">
-          
           {/* Left Column: Account Details Grid (lg:col-span-8) */}
           <div className="lg:col-span-8 space-y-12">
-            
             <div className="space-y-6">
               <h2 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wide text-slate-800">
                 Bank Transfer Details
               </h2>
               <p className="text-slate-600 text-sm leading-relaxed font-medium">
-                You can make direct bank transfers or standing orders to support our work. Please find the official local and international Zenith Bank accounts below:
+                You can make direct bank transfers or standing orders to support our work. Please
+                find the official local and international UBA Bank accounts below:
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
               {/* Local Account Card */}
-              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-sm relative group hover:shadow-md transition">
+              <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-6 md:p-8 flex flex-col justify-center shadow-sm relative group hover:shadow-md transition">
                 <span className="w-12 h-12 rounded-full bg-[#B91C1C]/15 text-[#B91C1C] flex items-center justify-center text-xl mb-6">
                   <FaUniversity />
                 </span>
-                
+
                 <div className="space-y-4">
                   <span className="text-[10px] font-extrabold text-[#B91C1C] uppercase tracking-wider bg-[#B91C1C]/10 px-2 py-0.5 rounded">
                     Local Transfer (NGN)
@@ -99,13 +99,15 @@ export default function GivePage() {
                   <h3 className="font-extrabold text-slate-800 text-lg uppercase tracking-wide">
                     {localAccount.bank}
                   </h3>
-                  
+
                   <div className="space-y-1.5 text-xs md:text-sm font-semibold text-slate-500">
                     <p>Account Name:</p>
                     <p className="text-slate-800 font-bold">{localAccount.name}</p>
                     <p className="mt-3">Account Number:</p>
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-900 font-black text-base md:text-lg">{localAccount.number}</span>
+                      <span className="text-slate-900 font-black text-base md:text-lg">
+                        {localAccount.number}
+                      </span>
                       <button
                         onClick={() => handleCopy(localAccount.number, "local")}
                         className="text-slate-400 hover:text-slate-600 p-1"
@@ -114,7 +116,9 @@ export default function GivePage() {
                         <FaCopy />
                       </button>
                       {copiedText === "local" && (
-                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">Copied!</span>
+                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">
+                          Copied!
+                        </span>
                       )}
                     </div>
                   </div>
@@ -126,7 +130,7 @@ export default function GivePage() {
                 <span className="w-12 h-12 rounded-full bg-[#B91C1C]/15 text-[#B91C1C] flex items-center justify-center text-xl mb-6">
                   <FaGlobe />
                 </span>
-                
+
                 <div className="space-y-4">
                   <span className="text-[10px] font-extrabold text-[#B91C1C] uppercase tracking-wider bg-[#B91C1C]/10 px-2 py-0.5 rounded">
                     International Transfer (USD)
@@ -134,13 +138,15 @@ export default function GivePage() {
                   <h3 className="font-extrabold text-slate-800 text-lg uppercase tracking-wide">
                     {usdAccount.bank}
                   </h3>
-                  
+
                   <div className="space-y-1.5 text-xs md:text-sm font-semibold text-slate-500">
                     <p>Account Name:</p>
                     <p className="text-slate-800 font-bold">{usdAccount.name}</p>
                     <p className="mt-3">Account Number:</p>
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-900 font-black text-base md:text-lg">{usdAccount.number}</span>
+                      <span className="text-slate-900 font-black text-base md:text-lg">
+                        {usdAccount.number}
+                      </span>
                       <button
                         onClick={() => handleCopy(usdAccount.number, "usd")}
                         className="text-slate-400 hover:text-slate-600 p-1"
@@ -149,7 +155,9 @@ export default function GivePage() {
                         <FaCopy />
                       </button>
                       {copiedText === "usd" && (
-                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">Copied!</span>
+                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">
+                          Copied!
+                        </span>
                       )}
                     </div>
                     <p className="mt-3">SWIFT Code:</p>
@@ -163,13 +171,14 @@ export default function GivePage() {
                         <FaCopy />
                       </button>
                       {copiedText === "swift" && (
-                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">Copied!</span>
+                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest animate-pulse">
+                          Copied!
+                        </span>
                       )}
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -178,15 +187,18 @@ export default function GivePage() {
             <div className="bg-[#7F1D1D] text-white rounded-2xl p-6 md:p-8 shadow-lg text-center space-y-6 relative overflow-hidden">
               {/* Background graphic details */}
               <div className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-white/5 pointer-events-none" />
-              
+
               <span className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#7F1D1D] text-2xl mx-auto shadow-md">
                 <FaHeart />
               </span>
 
               <div className="space-y-3">
-                <span className="text-gold font-serif text-6xl leading-none block select-none">“</span>
+                <span className="text-gold font-serif text-6xl leading-none block select-none">
+                  “
+                </span>
                 <p className="font-serif italic text-sm md:text-base leading-relaxed text-slate-100 -mt-6">
-                  Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.
+                  Each of you should give what you have decided in your heart to give, not
+                  reluctantly or under compulsion, for God loves a cheerful giver.
                 </p>
                 <p className="font-sans font-bold text-gold text-center text-xs tracking-wider uppercase">
                   — 2 Corinthians 9:7
@@ -194,7 +206,6 @@ export default function GivePage() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
     </div>

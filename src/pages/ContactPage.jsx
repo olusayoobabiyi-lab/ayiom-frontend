@@ -52,7 +52,8 @@ export default function ContactPage() {
               CONTACT US
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              We would love to hear from you. Reach out to us for prayers, partnership inquiries, or general support requests.
+              We would love to hear from you. Reach out to us for prayers, partnership inquiries, or
+              general support requests.
             </p>
           </motion.div>
         </div>
@@ -73,7 +74,6 @@ export default function ContactPage() {
       {/* Main Content Layout Grid */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16">
-          
           {/* Left Column: Info & Google Maps placeholder (lg:col-span-5) */}
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-6">
@@ -81,7 +81,8 @@ export default function ContactPage() {
                 Contact Information
               </h2>
               <p className="text-slate-600 text-xs md:text-sm font-medium leading-relaxed max-w-sm">
-                Have questions or need counsel? Get in touch with our ministry coordinators. We are ready to serve and stand with you.
+                Have questions or need counsel? Get in touch with our ministry coordinators. We are
+                ready to serve and stand with you.
               </p>
             </div>
 
@@ -92,8 +93,9 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <h4 className="font-bold text-slate-800 mb-1">Phone Numbers</h4>
-                  <p className="text-slate-600 font-bold">08168804973</p>
-                  <p className="text-slate-600 font-bold">08062862967</p>
+                  <p className="text-slate-600 font-bold">+2348168804973</p>
+                  <p className="text-slate-600 font-bold">+2348062862967</p>
+                  <p className="text-slate-600 font-bold">+2349032598186</p>
                 </div>
               </div>
 
@@ -103,7 +105,7 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <h4 className="font-bold text-slate-800 mb-1">Email Address</h4>
-                  <p className="text-slate-600 font-bold">amendyourwaysoutreach@gmail.com</p>
+                  <p className="text-slate-600 font-bold">amendyourwaysintl@gmail.com</p>
                 </div>
               </div>
 
@@ -114,7 +116,8 @@ export default function ContactPage() {
                 <div>
                   <h4 className="font-bold text-slate-800 mb-1">Office Location</h4>
                   <p className="text-slate-600 font-semibold leading-relaxed">
-                    Reaching out with the love of Christ - Main Outreach Centre, Ibadan, Nigeria.
+                    Retreat Centre, No 7, Road B, Olutosin Estate, Iloro Community, Ejioku, Ibadan,
+                    Oyo State, Nigeria.
                   </p>
                 </div>
               </div>
@@ -123,7 +126,7 @@ export default function ContactPage() {
             {/* Custom Iframe Google Maps placeholder */}
             <div className="aspect-video w-full rounded-xl border border-slate-200 overflow-hidden shadow-sm relative bg-slate-100">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126588.65089629146!2d3.8247076!3d7.3775355!2m3!1f0!2f0!3f0!3m2!1i1020!2i768!4f13.1!3m3!1m2!1s0x10398d77eeff2567%3A0x8c0bdf2864696df0!2sIbadan%2C%20Nigeria!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3955.9286811321645!2d4.1001601865081785!3d7.473128188528328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1sen!2sng!4v1783436674086!5m2!1sen!2sng"
                 className="absolute inset-0 w-full h-full border-0"
                 allowFullScreen=""
                 loading="lazy"
@@ -150,7 +153,8 @@ export default function ContactPage() {
                 >
                   <h4 className="font-bold text-sm">Message Sent Successfully!</h4>
                   <p className="text-xs leading-relaxed max-w-sm mx-auto">
-                    Thank you for reaching out. Your submission has been received, and we will get back to you shortly. God bless you!
+                    Thank you for reaching out. Your submission has been received, and we will get
+                    back to you shortly. God bless you!
                   </p>
                 </motion.div>
               ) : (
@@ -227,7 +231,6 @@ export default function ContactPage() {
               )}
             </div>
           </div>
-
         </div>
       </section>
     </div>

@@ -93,8 +93,7 @@ export default function EventsPage() {
             <motion.div
               variants={containerVariants}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
+              animate="show"
               className="grid grid-cols-1 lg:grid-cols-2 gap-8"
             >
               {filteredEvents.map((event) => (

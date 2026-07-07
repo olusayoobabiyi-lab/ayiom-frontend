@@ -16,11 +16,14 @@ import GalleryAlbumPage from "@/pages/GalleryAlbumPage";
 import ContactPage from "@/pages/ContactPage";
 import RegisterPage from "@/pages/RegisterPage";
 import GivePage from "@/pages/GivePage";
+import ScrollToTop from "@/components/common/ScrollToTop";
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route element={<PublicLayout />}>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<PublicLayout />}>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
         <Route path={ROUTES.MISSION} element={<MissionPage />} />
@@ -39,6 +42,7 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
+   </>
   );
 };
 

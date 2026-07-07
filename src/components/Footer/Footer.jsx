@@ -166,13 +166,14 @@ const Footer = () => {
               <div className="flex gap-3">
                 <FaPhone className="text-gold mt-0.5 shrink-0" />
                 <div className="flex flex-col">
-                  <span>08168804973</span>
-                  <span>08062862967</span>
+                  <span>+2348168804973</span>
+                  <span>+2348062862967</span>
+                  <span>+2349032598186</span>
                 </div>
               </div>
               <div className="flex gap-3 items-center">
                 <FaEnvelope className="text-gold shrink-0" />
-                <span>amendyourwaysoutreach@gmail.com</span>
+                <span>amendyourwaysintl@gmail.com</span>
               </div>
               <div className="flex gap-3 items-start">
                 <FaMapMarkerAlt className="text-gold shrink-0 mt-0.5" />

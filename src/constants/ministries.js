@@ -2,27 +2,40 @@ export const MINISTRIES_DATA = [
   {
     id: "evangelism",
     title: "EVANGELISM",
-    description: "We preach the Gospel of Jesus Christ to win souls and make disciples in all nations.",
+    description:
+      "We preach the Gospel of Jesus Christ to win souls and make disciples in all nations.",
     iconName: "cross",
     iconColor: "bg-[#8B1E1E]",
     titleColor: "text-[#8B1E1E]",
     lineColor: "bg-[#8B1E1E]",
-    image: "https://images.unsplash.com/photo-1504052434569-7c9180859485?q=80&w=600",
+    image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600",
   },
   {
-    id: "discipleship",
-    title: "DISCIPLESHIP",
-    description: "We teach and equip believers to grow in faith, character, and purpose through sound biblical teaching.",
+    id: "Vocational-Training",
+    title: "VOCATIONAL TRAINING",
+    description:
+      "We provide vocational training and skills development to empower individuals and communities.",
     iconName: "users",
     iconColor: "bg-[#D97706]",
     titleColor: "text-[#D97706]",
     lineColor: "bg-[#D97706]",
     image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600",
   },
+  // {
+  //   id: "discipleship",
+  //   title: "DISCIPLESHIP",
+  //   description: "We teach and equip believers to grow in faith, character, and purpose through sound biblical teaching.",
+  //   iconName: "users",
+  //   iconColor: "bg-[#D97706]",
+  //   titleColor: "text-[#D97706]",
+  //   lineColor: "bg-[#D97706]",
+  //   image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600",
+  // },
   {
     id: "outreach",
     title: "OUTREACH TO RURAL COMMUNITIES",
-    description: "We take the love of Christ to rural areas through evangelism, medical missions, relief materials, and support.",
+    description:
+      "We take the love of Christ to rural areas through evangelism, medical missions, relief materials, and support.",
     iconName: "outreach",
     iconColor: "bg-[#1E3A8A]",
     titleColor: "text-[#1E3A8A]",
@@ -32,7 +45,8 @@ export const MINISTRIES_DATA = [
   {
     id: "school-support",
     title: "BACK TO SCHOOL SUPPORT",
-    description: "We provide school materials, uniforms, and support to children from less privileged families.",
+    description:
+      "We provide school materials, uniforms, and support to children from less privileged families.",
     iconName: "school",
     iconColor: "bg-[#16A34A]",
     titleColor: "text-[#16A34A]",
@@ -42,7 +56,8 @@ export const MINISTRIES_DATA = [
   {
     id: "widows-care",
     title: "CARE FOR WIDOWS",
-    description: "We show God's love by supporting widows through provision, counseling, and empowerment programs.",
+    description:
+      "We show God's love by supporting widows through provision, counseling, and empowerment programs.",
     iconName: "widows",
     iconColor: "bg-[#7E22CE]",
     titleColor: "text-[#7E22CE]",
@@ -52,7 +67,8 @@ export const MINISTRIES_DATA = [
   {
     id: "orphans-care",
     title: "CARE FOR ORPHANS & LESS PRIVILEGED",
-    description: "We provide for the needs of orphans and less privileged people through food, clothing, shelter, and education.",
+    description:
+      "We provide for the needs of orphans and less privileged people through food, clothing, shelter, and education.",
     iconName: "orphans",
     iconColor: "bg-[#DC2626]",
     titleColor: "text-[#DC2626]",
@@ -62,7 +78,8 @@ export const MINISTRIES_DATA = [
   {
     id: "prayer-intercession",
     title: "PRAYER & INTERCESSION",
-    description: "We are committed to prayer, interceding for families, nations, and the body of Christ.",
+    description:
+      "We are committed to prayer, interceding for families, nations, and the body of Christ.",
     iconName: "prayer",
     iconColor: "bg-[#2563EB]",
     titleColor: "text-[#2563EB]",
@@ -72,7 +89,8 @@ export const MINISTRIES_DATA = [
   {
     id: "volunteer-partnership",
     title: "VOLUNTEER & PARTNERSHIP",
-    description: "We partner with individuals, churches, and organizations to expand God's work and impact more lives.",
+    description:
+      "We partner with individuals, churches, and organizations to expand God's work and impact more lives.",
     iconName: "volunteer",
     iconColor: "bg-[#B45309]",
     titleColor: "text-[#B45309]",

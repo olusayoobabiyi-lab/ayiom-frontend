@@ -8,6 +8,8 @@ import {
   FaHandHoldingHeart,
 } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 import Hero from "@/components/Hero/Hero";
 import MissionCard from "@/components/MissionCard/MissionCard";
 import VisionCard from "@/components/VisionCard/VisionCard";
@@ -15,6 +17,7 @@ import FocusCard from "@/components/FocusCard/FocusCard";
 import EventCard from "@/components/EventCard/EventCard";
 import CalendarWidget from "@/components/CalendarWidget/CalendarWidget";
 import missionBg from "@/assets/images/mission-bg.png";
+import convenerImg from "@/assets/images/convener.png";
 
 const mission = {
   icon: <FaCrosshairs />,
@@ -26,12 +29,10 @@ const mission = {
   titleColor: "text-red-700",
 };
 
-
 const vision = {
   icon: <FaBullseye />,
   title: "OUR VISION",
-  description:
-    "To see lives transformed and nations impacted through the message of Christ.",
+  description: "To see lives transformed and nations impacted through the message of Christ.",
   iconBg: "bg-yellow-600",
   titleColor: "text-yellow-600",
 };
@@ -110,7 +111,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <MissionCard {...mission} />
             <VisionCard {...vision} />
-            
+
             {/* Scripture Graphic Card */}
             <div className="relative overflow-hidden rounded-xl shadow-lg min-h-[250px] flex items-center justify-center p-8 bg-slate-900 text-white border border-slate-100">
               <img
@@ -144,11 +145,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 3.5 ABOUT THE CONVENER SECTION */}
+      <section className="w-full bg-white py-16 md:py-24 border-b border-slate-100">
+        <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            {/* Convener Image Column (Left, lg:col-span-5) */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-64 h-80 md:w-80 md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white outline outline-2 outline-gold shrink-0 bg-slate-100">
+                <img
+                  src={convenerImg}
+                  alt="Ministry Convener"
+                  className="w-full h-full object-cover object-top animate-fade-in-up"
+                />
+              </div>
+            </div>
+
+            {/* Convener Write-up Column (Right, lg:col-span-7) */}
+            <div className="lg:col-span-7">
+              <span className="text-red-750 font-extrabold text-xs tracking-widest uppercase">
+                MINISTRY LEADERSHIP
+              </span>
+              <h2 className="text-2xl md:text-3.5xl font-black text-slate-800 uppercase tracking-wide mt-2">
+                ABOUT THE CONVENER
+              </h2>
+              <div className="w-14 h-[3px] bg-gold my-5" />
+
+              <div className="space-y-5 text-xs md:text-sm text-slate-650 leading-relaxed font-medium max-w-2xl">
+                <p className="font-serif italic text-base md:text-lg text-slate-800 leading-relaxed font-bold border-l-4 border-gold pl-4 py-1">
+                  "Taking the uncompromised message of Jesus Christ to the ends of the earth, and
+                  expressing God's love through practical care."
+                </p>
+                <p>
+                  Amend Your Ways International Outreach Ministry is led by a dedicated convener
+                  committed to winning souls, discipling believers to walk in power and purpose, and
+                  extending compassion to the less privileged.
+                </p>
+                <p>
+                  We believe that true religion is active—reaching out to the widows, supporting the
+                  fatherless, and preaching the Gospel with boldness. We invite you to partner and
+                  walk with us as we change lives and impact nations for God's glory.
+                </p>
+              </div>
+
+              {/* Signature block */}
+              <div className="mt-8">
+                <p className="text-sm font-extrabold text-slate-905 uppercase tracking-wider">
+                  Convener
+                </p>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                  Pastor Taiwo Clement
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4. UPCOMING EVENTS & CALENDAR SECTION (Side-by-side grid) */}
       <section className="w-full bg-[#F8FAFC] py-16 md:py-24">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-stretch">
-            
             {/* Left Column: Events Title and 2x2 Event Cards Grid */}
             <div className="xl:col-span-8 flex flex-col justify-between">
               <div>
@@ -159,9 +215,11 @@ export default function Home() {
                       UPCOMING EVENTS
                     </h3>
                   </div>
-                  <button className="text-[10px] md:text-xs font-bold uppercase tracking-wider border border-slate-300 hover:bg-white text-slate-600 px-4 py-2 rounded transition shadow-sm">
-                    VIEW ALL EVENTS
-                  </button>
+                  <Link to={ROUTES.EVENTS}>
+                    <button className="text-[10px] md:text-xs font-bold uppercase tracking-wider border border-slate-300 hover:bg-white text-slate-600 px-4 py-2 rounded transition shadow-sm">
+                      VIEW ALL EVENTS
+                    </button>
+                  </Link>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
@@ -176,7 +234,6 @@ export default function Home() {
             <div className="xl:col-span-4 h-full">
               <CalendarWidget />
             </div>
-
           </div>
         </div>
       </section>
