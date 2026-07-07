@@ -136,7 +136,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to={ROUTES.MINISTRY} className="hover:text-white transition">
-                  Discipleship
+                  Vocational Training
                 </Link>
               </li>
               <li>
