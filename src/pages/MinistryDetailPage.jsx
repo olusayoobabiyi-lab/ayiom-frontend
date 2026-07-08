@@ -25,24 +25,6 @@ const DETAILS_MAP = {
     ],
   },
 
-  "vocational-training": {
-    objectives: [
-      "Provide training in practical skills such as tailoring, carpentry, and computer literacy.",
-      "Conduct workshops and seminars to enhance participants' professional capabilities.",
-      "Facilitate job placement services for trained individuals.",
-      "Develop resource materials and study guides for vocational development.",
-    ],
-    faqs: [
-      {
-        q: "When do the vocational training classes hold?",
-        a: "We run trainings based on the needs of the community and the availability of instructors.",
-      },
-      {
-        q: "Are the study materials free?",
-        a: "Yes, all study materials are provided free of charge.",
-      },
-    ],
-  },
   // discipleship: {
   //   objectives: [
   //     "Provide weekly systematic Bible studies for believers of all levels.",
@@ -160,6 +142,24 @@ const DETAILS_MAP = {
       {
         q: "How do I become a financial partner?",
         a: "You can make a donation using the 'GIVE NOW' button at the top, or write to us for structured partnership options.",
+      },
+    ],
+  },
+  "Vocational-Training": {
+    objectives: [
+      "Provide training in practical skills such as tailoring, carpentry, and computer literacy.",
+      "Conduct workshops and seminars to enhance participants' professional capabilities.",
+      "Facilitate job placement services for trained individuals.",
+      "Develop resource materials and study guides for vocational development.",
+    ],
+    faqs: [
+      {
+        q: "When do the vocational training classes hold?",
+        a: "We run trainings based on the needs of the community and the availability of instructors.",
+      },
+      {
+        q: "Are the study materials free?",
+        a: "Yes, all study materials are provided free of charge.",
       },
     ],
   },
