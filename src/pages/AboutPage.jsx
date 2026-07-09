@@ -13,11 +13,8 @@ import {
 
 import MissionCard from "@/components/MissionCard/MissionCard";
 import VisionCard from "@/components/VisionCard/VisionCard";
-import headerBg from "@/assets/images/slide-worship.png";
+import headerBg from "@/assets/images/hero.png";
 import missionBg from "@/assets/images/mission-bg.png";
-import childrenImg from "@/assets/images/children.png";
-import outreachImg from "@/assets/images/slide-outreach.png";
-import worshipImg from "@/assets/images/slide-worship.png";
 import heroImg from "@/assets/images/hero.png";
 
 const mission = {
@@ -33,8 +30,7 @@ const mission = {
 const vision = {
   icon: <FaBullseye />,
   title: "OUR VISION",
-  description:
-    "To see lives transformed and nations impacted through the message of Christ.",
+  description: "To see lives transformed and nations impacted through the message of Christ.",
   iconBg: "bg-yellow-600",
   titleColor: "text-yellow-600",
 };
@@ -81,27 +77,43 @@ const whatWeDoList = [
   "Prayer, counseling and support services",
 ];
 
-const EVENT_SLIDES = [
-  { image: childrenImg, caption: "Back to School Support for Local Children" },
-  { image: outreachImg, caption: "Rural Community Outreach and Welfare Care" },
-  { image: worshipImg, caption: "Worship & Revival Services at Ibadan Center" },
-  { image: heroImg, caption: "Widows Support Outreach & Empowerment" },
-];
+import api from "@/services/api";
+
+const EVENT_SLIDES = [{ image: heroImg, caption: "Widows Support Outreach & Empowerment" }];
 
 export default function AboutPage() {
+  const [eventSlides, setEventSlides] = useState(EVENT_SLIDES);
   const [currentEventSlide, setCurrentEventSlide] = useState(0);
+
+  useEffect(() => {
+    async function loadAboutCarousel() {
+      try {
+        const res = await api.get("/about");
+        const carousel = res.data.data?.carousel || [];
+        if (carousel.length > 0) {
+          const mapped = carousel.map((url, idx) => ({
+            image: url,
+            caption: `Amend Your Ways Outreach Photo ${idx + 1}`,
+          }));
+          setEventSlides(mapped);
+        }
+      } catch (err) {
+        console.error("Failed to load about page carousel:", err);
+      }
+    }
+    loadAboutCarousel();
+  }, []);
 
   // Auto rotate the past events carousel
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentEventSlide((prev) => (prev + 1) % EVENT_SLIDES.length);
+      setCurrentEventSlide((prev) => (prev + 1) % eventSlides.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, []);
+  }, [eventSlides.length]);
 
   return (
     <div className="flex flex-col w-full bg-white">
-      
       {/* 1. HERO HEADER BANNER (Curved Red & White Wave at the Bottom) */}
       <section className="relative w-full h-[360px] md:h-[440px] bg-slate-950 flex items-center overflow-hidden pt-[90px] pb-12">
         {/* Background Image */}
@@ -121,14 +133,12 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl"
           >
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-wide">
-              ABOUT US
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-wide">ABOUT US</h1>
             <div className="w-20 h-[3px] bg-gold my-4" />
             <p className="text-slate-200 text-xs md:text-sm xl:text-base leading-relaxed font-medium max-w-2xl">
-              We are a Christ-centered ministry committed to preaching the Gospel,
-              discipling believers, and showing God's love through practical acts
-              of kindness, especially to widows and less privileged people.
+              We are a Christ-centered ministry committed to preaching the Gospel, discipling
+              believers, and showing God's love through practical acts of kindness, especially to
+              widows and less privileged people.
             </p>
           </motion.div>
         </div>
@@ -141,15 +151,9 @@ export default function AboutPage() {
             className="relative block w-full h-[60px] md:h-[90px]"
           >
             {/* Red border wave */}
-            <path
-              fill="#B91C1C"
-              d="M0,50 C320,118 1120,2 1440,60 L1440,120 L0,120Z"
-            />
+            <path fill="#B91C1C" d="M0,50 C320,118 1120,2 1440,60 L1440,120 L0,120Z" />
             {/* White wave matching body background */}
-            <path
-              fill="#ffffff"
-              d="M0,60 C320,128 1120,12 1440,70 L1440,120 L0,120Z"
-            />
+            <path fill="#ffffff" d="M0,60 C320,128 1120,12 1440,70 L1440,120 L0,120Z" />
           </svg>
         </div>
       </section>
@@ -158,7 +162,6 @@ export default function AboutPage() {
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-            
             {/* Left Column: Who We Are Text Block (lg:col-span-5) */}
             <div className="lg:col-span-5 flex flex-col justify-center">
               <span className="text-red-700 font-extrabold text-xs tracking-widest uppercase">
@@ -168,17 +171,16 @@ export default function AboutPage() {
                 OUR IDENTITY IN CHRIST
               </h2>
               <div className="w-14 h-[3px] bg-gold my-5" />
-              
+
               <div className="space-y-4 text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
                 <p>
-                  Amend Your Ways Int'l Outreach Ministry is a faith-based organization
-                  dedicated to transforming lives and impacting nations with the love of
-                  Christ. We believe that true religion is demonstrated through the
-                  Word of God and acts of compassion.
+                  Amend Your Ways Int'l Outreach Ministry is a faith-based organization dedicated to
+                  transforming lives and impacting nations with the love of Christ. We believe that
+                  true religion is demonstrated through the Word of God and acts of compassion.
                 </p>
                 <p>
-                  We reach out to communities, share the Gospel, support the less
-                  privileged, and disciple believers to walk in purpose and power.
+                  We reach out to communities, share the Gospel, support the less privileged, and
+                  disciple believers to walk in purpose and power.
                 </p>
               </div>
 
@@ -217,7 +219,6 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -243,7 +244,9 @@ export default function AboutPage() {
                 className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center text-center h-full"
               >
                 {/* Value Icon */}
-                <div className={`w-14 h-14 rounded-full ${value.color} text-white flex items-center justify-center text-xl shadow-md`}>
+                <div
+                  className={`w-14 h-14 rounded-full ${value.color} text-white flex items-center justify-center text-xl shadow-md`}
+                >
                   {value.icon}
                 </div>
                 {/* Title */}
@@ -265,7 +268,6 @@ export default function AboutPage() {
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
             {/* Left side: Checklist (lg:col-span-6) */}
             <div className="lg:col-span-6">
               <span className="text-red-700 font-extrabold text-xs tracking-widest uppercase">
@@ -294,8 +296,8 @@ export default function AboutPage() {
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentEventSlide}
-                    src={EVENT_SLIDES[currentEventSlide].image}
-                    alt={EVENT_SLIDES[currentEventSlide].caption}
+                    src={eventSlides[currentEventSlide].image}
+                    alt={eventSlides[currentEventSlide].caption}
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={{ opacity: 0.8, scale: 1 }}
                     exit={{ opacity: 0 }}
@@ -303,25 +305,27 @@ export default function AboutPage() {
                     className="w-full h-full object-cover"
                   />
                 </AnimatePresence>
-                
+
                 {/* Black Overlay at bottom for caption */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-5 z-10">
-                  <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent p-5 z-10">
+                  <p className="text-red-550 text-[10px] font-black uppercase tracking-widest">
                     Past Event
                   </p>
                   <p className="text-gold text-xs md:text-sm font-extrabold mt-1">
-                    {EVENT_SLIDES[currentEventSlide].caption}
+                    {eventSlides[currentEventSlide].caption}
                   </p>
                 </div>
 
                 {/* Carousel indicators (dots) */}
                 <div className="absolute top-4 right-4 z-20 flex gap-1.5 bg-black/45 px-3 py-2 rounded-full backdrop-blur-sm">
-                  {EVENT_SLIDES.map((_, index) => (
+                  {eventSlides.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentEventSlide(index)}
                       className={`w-1.5 h-1.5 rounded-full transition-all ${
-                        index === currentEventSlide ? "bg-gold scale-125" : "bg-white/50 hover:bg-white/80"
+                        index === currentEventSlide
+                          ? "bg-gold scale-125"
+                          : "bg-white/50 hover:bg-white/80"
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
                     />
@@ -329,11 +333,9 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
     </div>
   );
 }

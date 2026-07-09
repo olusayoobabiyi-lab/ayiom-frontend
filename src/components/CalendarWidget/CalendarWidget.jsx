@@ -1,65 +1,84 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaCalendarAlt } from "react-icons/fa";
+import api from "@/services/api";
 
 const CalendarWidget = () => {
-  // Start calendar in May 2025 to match the design's "May – June 2025" view
-  const [value, setValue] = useState(new Date(2025, 4, 18));
+  const [events, setEvents] = useState([]);
+  const [value, setValue] = useState(new Date());
+
+  useEffect(() => {
+    async function fetchCalendarEvents() {
+      try {
+        const res = await api.get("/events");
+        setEvents(res.data.data || []);
+      } catch (err) {
+        console.error("Failed to load events for calendar widget:", err);
+      }
+    }
+    fetchCalendarEvents();
+  }, []);
+
+  const months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
 
   const getTileContent = ({ date, view }) => {
     if (view !== "month") return null;
 
     const day = date.getDate();
-    const month = date.getMonth(); // 0-indexed (4 = May, 5 = June, 7 = August)
+    const month = date.getMonth();
     const year = date.getFullYear();
 
-    // Check dates in 2025
-    if (year === 2025) {
-      if (month === 4 && day === 18) {
-        return (
-          <div className="calendar-dot-container">
-            <span className="calendar-dot calendar-dot--outreach" />
-          </div>
-        );
-      }
-      if (month === 4 && day === 29) {
-        return (
-          <div className="calendar-dot-container">
-            <span className="calendar-dot calendar-dot--prayer" />
-          </div>
-        );
-      }
-      if (month === 5 && day === 15) {
-        return (
-          <div className="calendar-dot-container">
-            <span className="calendar-dot calendar-dot--widows" />
-          </div>
-        );
-      }
-      if (month === 7 && day === 23) {
-        return (
-          <div className="calendar-dot-container">
-            <span className="calendar-dot calendar-dot--school" />
-          </div>
-        );
-      }
+    const match = events.find((e) => {
+      const eMonthIdx = months.indexOf(e.month);
+      return e.day === day && e.year === year && eMonthIdx === month;
+    });
+
+    if (match) {
+      let categoryClass = "calendar-dot--outreach";
+      if (match.category === "prayer") categoryClass = "calendar-dot--prayer";
+      if (match.category === "widows") categoryClass = "calendar-dot--widows";
+      if (match.category === "school") categoryClass = "calendar-dot--school";
+
+      return (
+        <div className="calendar-dot-container">
+          <span className={`calendar-dot ${categoryClass}`} />
+        </div>
+      );
     }
     return null;
   };
 
   const getTileClassName = ({ date, view }) => {
     if (view !== "month") return "";
-    
+
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
 
-    if (year === 2025) {
-      if (month === 4 && day === 18) return "font-bold text-green-700";
-      if (month === 4 && day === 29) return "font-bold text-yellow-600";
-      if (month === 5 && day === 15) return "font-bold text-red-600";
-      if (month === 7 && day === 23) return "font-bold text-blue-600";
+    const match = events.find((e) => {
+      const eMonthIdx = months.indexOf(e.month);
+      return e.day === day && e.year === year && eMonthIdx === month;
+    });
+
+    if (match) {
+      if (match.category === "outreach") return "font-bold text-green-700";
+      if (match.category === "prayer") return "font-bold text-yellow-600";
+      if (match.category === "widows") return "font-bold text-red-650";
+      if (match.category === "school") return "font-bold text-blue-600";
     }
     return "";
   };

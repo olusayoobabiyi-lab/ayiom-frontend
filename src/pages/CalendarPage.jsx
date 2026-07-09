@@ -1,77 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaChevronRight } from "react-icons/fa";
 import { EVENTS_DATA } from "@/constants/events";
+import api from "@/services/api";
 import "react-calendar/dist/Calendar.css";
+import { isEventOnDate, getEventVenue } from "@/utils/eventHelpers";
 
-import headerBg from "@/assets/images/slide-worship.png";
+import headerBg from "@/assets/images/hero.png";
 
 export default function CalendarPage() {
-  // Start calendar in May 2025 to match our mock data
-  const [selectedDate, setSelectedDate] = useState(new Date(2025, 4, 18));
+  const [events, setEvents] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    async function loadCalendarEvents() {
+      try {
+        const res = await api.get("/events");
+        const mapped = (res.data.data || []).map((e) => ({
+          ...e,
+          id: e._id,
+        }));
+        setEvents(mapped);
+      } catch (err) {
+        console.error("Failed to load calendar events:", err);
+        setEvents([]);
+      }
+    }
+    loadCalendarEvents();
+  }, []);
 
   // Find events on selected date
-  const selectedEvents = EVENTS_DATA.filter((event) => {
-    return (
-      event.day === selectedDate.getDate() &&
-      event.year === selectedDate.getFullYear() &&
-      (event.month === "MAY" && selectedDate.getMonth() === 4 ||
-       event.month === "JUN" && selectedDate.getMonth() === 5 ||
-       event.month === "AUG" && selectedDate.getMonth() === 7)
-    );
-  });
+  const selectedEvents = events
+    .filter((event) => isEventOnDate(event, selectedDate))
+    .map((event) => ({
+      ...event,
+      venue: getEventVenue(event, selectedDate),
+    }));
 
   const getTileContent = ({ date, view }) => {
     if (view !== "month") return null;
 
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
+    const match = events.find((e) => isEventOnDate(e, date));
 
-    if (year === 2025) {
-      const match = EVENTS_DATA.find((e) => {
-        return (
-          e.day === day &&
-          (e.month === "MAY" && month === 4 ||
-           e.month === "JUN" && month === 5 ||
-           e.month === "AUG" && month === 7)
-        );
-      });
+    if (match) {
+      let dotColor = "bg-[#16A34A]"; // outreach
+      if (match.category === "prayer") dotColor = "bg-[#D4AF37]";
+      if (match.category === "widows") dotColor = "bg-[#DC2626]";
+      if (match.category === "school") dotColor = "bg-[#2563EB]";
 
-      if (match) {
-        let dotColor = "bg-[#16A34A]"; // outreach
-        if (match.category === "prayer") dotColor = "bg-[#D4AF37]";
-        if (match.category === "widows") dotColor = "bg-[#DC2626]";
-        if (match.category === "school") dotColor = "bg-[#2563EB]";
-
-        return (
-          <div className="flex justify-center mt-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
-          </div>
-        );
-      }
+      return (
+        <div className="flex justify-center mt-1">
+          <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
+        </div>
+      );
     }
     return null;
   };
 
   const getTileClassName = ({ date, view }) => {
     if (view !== "month") return "";
-    
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
 
-    const match = EVENTS_DATA.find((e) => {
-      return (
-        e.day === day &&
-        e.year === year &&
-        (e.month === "MAY" && month === 4 ||
-         e.month === "JUN" && month === 5 ||
-         e.month === "AUG" && month === 7)
-      );
-    });
+    const match = events.find((e) => isEventOnDate(e, date));
 
     if (match) {
       return "font-bold text-red-750";
@@ -104,7 +95,8 @@ export default function CalendarPage() {
               EVENT CALENDAR
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              View our complete calendar of events. Click on marked dates to see scheduled ministries, programs, and outreach activities.
+              View our complete calendar of events. Click on marked dates to see scheduled
+              ministries, programs, and outreach activities.
             </p>
           </motion.div>
         </div>
@@ -125,7 +117,6 @@ export default function CalendarPage() {
       {/* Main Grid */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-start">
-          
           {/* Calendar Widget Column (lg:col-span-7) */}
           <div className="lg:col-span-7 bg-slate-50 border border-slate-200/80 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
             <div className="flex items-center gap-3 border-b border-slate-200/60 pb-4">
@@ -134,7 +125,7 @@ export default function CalendarPage() {
                 SELECT A DATE
               </h3>
             </div>
-            
+
             <div className="calendar-large-container bg-white rounded-xl border border-slate-100 p-4 shadow-inner">
               <Calendar
                 onChange={setSelectedDate}
@@ -169,7 +160,12 @@ export default function CalendarPage() {
           {/* Events Sidebar Column (lg:col-span-5) */}
           <div className="lg:col-span-5 bg-white border border-slate-100 shadow-card rounded-2xl p-6 md:p-8 space-y-6 min-h-[400px]">
             <h3 className="font-black text-slate-800 text-base md:text-lg uppercase tracking-wider pb-4 border-b border-slate-100">
-              Schedule for {selectedDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              Schedule for{" "}
+              {selectedDate.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
             </h3>
 
             <AnimatePresence mode="wait">
@@ -182,8 +178,13 @@ export default function CalendarPage() {
                   className="space-y-6"
                 >
                   {selectedEvents.map((event) => (
-                    <div key={event.id} className="group border border-slate-150 rounded-xl p-5 hover:bg-slate-50 transition shadow-sm">
-                      <span className={`inline-block text-[9px] font-extrabold text-white px-2 py-0.5 rounded uppercase tracking-wider mb-3 ${event.monthColor}`}>
+                    <div
+                      key={event.id}
+                      className="group border border-slate-150 rounded-xl p-5 hover:bg-slate-50 transition shadow-sm"
+                    >
+                      <span
+                        className={`inline-block text-[9px] font-extrabold text-white px-2 py-0.5 rounded uppercase tracking-wider mb-3 ${event.monthColor}`}
+                      >
                         {event.category}
                       </span>
                       <h4 className="font-bold text-slate-800 text-sm md:text-base mb-3 leading-snug">
@@ -221,13 +222,13 @@ export default function CalendarPage() {
                 >
                   <FaCalendarAlt size={36} className="text-slate-350" />
                   <p className="text-xs font-semibold max-w-xs leading-relaxed">
-                    No ministry events scheduled on this day. Please select highlighted dates on the calendar to see upcoming programs.
+                    No ministry events scheduled on this day. Please select highlighted dates on the
+                    calendar to see upcoming programs.
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
-
         </div>
       </section>
     </div>

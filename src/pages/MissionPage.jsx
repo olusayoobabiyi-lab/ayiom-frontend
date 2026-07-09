@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 
 import VisionCard from "@/components/VisionCard/VisionCard";
-import headerBg from "@/assets/images/slide-bible.png";
+import headerBg from "@/assets/images/hero.png";
 import missionBg from "@/assets/images/mission-bg.png";
 import heroImg from "@/assets/images/hero.png";
 

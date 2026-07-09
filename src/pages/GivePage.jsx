@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FaHeart, FaUniversity, FaGlobe, FaCopy } from "react-icons/fa";
 import { useState } from "react";
-import headerBg from "@/assets/images/slide-worship.png";
+import headerBg from "@/assets/images/hero.png";
 
 export default function GivePage() {
   const [copiedText, setCopiedText] = useState("");

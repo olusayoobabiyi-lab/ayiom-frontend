@@ -12,7 +12,7 @@ import {
   FaBook,
 } from "react-icons/fa";
 
-import headerBg from "@/assets/images/slide-worship.png";
+import headerBg from "@/assets/images/hero.png";
 import { MINISTRIES_DATA } from "@/constants/ministries";
 
 const getMinistryIcon = (iconName) => {
@@ -176,7 +176,8 @@ export default function MinistryPage() {
                       to={`/ministry/${item.id}`}
                       className={`inline-flex items-center gap-2 font-bold text-xs uppercase tracking-wider transition ${item.titleColor} hover:opacity-85`}
                     >
-                      READ MORE <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
+                      READ MORE{" "}
+                      <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
                     </Link>
                   </div>
                 </div>

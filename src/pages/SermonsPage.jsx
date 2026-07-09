@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPlay, FaSearch, FaUser, FaBook, FaCalendarAlt, FaClock } from "react-icons/fa";
 import { SERMONS_DATA } from "@/constants/sermons";
-import headerBg from "@/assets/images/slide-worship.png";
+import headerBg from "@/assets/images/hero.png";
+import api from "@/services/api";
 
 export default function SermonsPage() {
+  const [sermons, setSermons] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredSermons = SERMONS_DATA.filter((sermon) => {
+  useEffect(() => {
+    async function loadSermons() {
+      try {
+        const res = await api.get("/sermons");
+        const mapped = (res.data.data || []).map((s) => ({
+          ...s,
+          id: s._id,
+        }));
+        setSermons(mapped);
+      } catch (err) {
+        console.error("Failed to load sermons:", err);
+        setSermons([]);
+      }
+    }
+    loadSermons();
+  }, []);
+
+  const filteredSermons = sermons.filter((sermon) => {
     const query = searchQuery.toLowerCase();
     return (
       sermon.title.toLowerCase().includes(query) ||
@@ -55,7 +74,8 @@ export default function SermonsPage() {
               SERMONS & MESSAGES
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              Listen to life-transforming sermons, biblical teachings, and spiritual messages designed to build your faith and guide your spiritual walk.
+              Listen to life-transforming sermons, biblical teachings, and spiritual messages
+              designed to build your faith and guide your spiritual walk.
             </p>
           </motion.div>
         </div>
@@ -76,7 +96,6 @@ export default function SermonsPage() {
       {/* Main Catalog & Search */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 space-y-12">
-          
           {/* Search bar row */}
           <div className="max-w-xl mx-auto relative">
             <input
@@ -94,8 +113,7 @@ export default function SermonsPage() {
             <motion.div
               variants={containerVariants}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
+              animate="show"
               className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
             >
               {filteredSermons.map((sermon) => (
@@ -113,7 +131,7 @@ export default function SermonsPage() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-                    
+
                     {/* Centered Play Button overlay */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <Link
@@ -149,11 +167,18 @@ export default function SermonsPage() {
                     <div className="border-t border-slate-50 pt-4 flex flex-col gap-1.5 text-xs font-bold text-slate-600">
                       <div className="flex items-center gap-2">
                         <FaUser className="text-slate-400 text-[10px]" />
-                        <span>Speaker: <strong className="text-slate-800">{sermon.speaker}</strong></span>
+                        <span>
+                          Speaker: <strong className="text-slate-800">{sermon.speaker}</strong>
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
                         <FaBook className="text-[#D4AF37] text-[10px]" />
-                        <span>Scripture: <strong className="text-slate-800 font-serif italic">{sermon.scripture}</strong></span>
+                        <span>
+                          Scripture:{" "}
+                          <strong className="text-slate-800 font-serif italic">
+                            {sermon.scripture}
+                          </strong>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -165,7 +190,6 @@ export default function SermonsPage() {
               <p className="text-slate-500 font-medium">No sermons found matching your criteria.</p>
             </div>
           )}
-
         </div>
       </section>
     </div>

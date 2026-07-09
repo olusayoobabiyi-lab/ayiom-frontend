@@ -3,17 +3,35 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowLeft, FaChevronLeft, FaChevronRight, FaTimes, FaCalendarAlt } from "react-icons/fa";
 import { GALLERY_ALBUMS } from "@/constants/gallery";
+import api from "@/services/api";
 
 export default function GalleryAlbumPage() {
   const { id } = useParams();
-  const album = GALLERY_ALBUMS.find((a) => a.id === id);
-
+  const [album, setAlbum] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [activePhotoIndex, setActivePhotoIndex] = useState(null); // null means closed
+
+  useEffect(() => {
+    async function fetchAlbumDetails() {
+      try {
+        setLoading(true);
+        const res = await api.get(`/gallery/albums/${id}`);
+        console.log("Album detail data loaded:", res.data.data);
+        setAlbum(res.data.data);
+      } catch (err) {
+        console.error("Failed to load album details:", err);
+        setAlbum(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAlbumDetails();
+  }, [id]);
 
   // Handle keypress controls for Lightbox
   useEffect(() => {
+    if (!album || !album.images || activePhotoIndex === null) return;
     const handleKeyDown = (e) => {
-      if (activePhotoIndex === null) return;
       if (e.key === "Escape") setActivePhotoIndex(null);
       if (e.key === "ArrowRight") {
         setActivePhotoIndex((prev) => (prev + 1) % album.images.length);
@@ -25,13 +43,25 @@ export default function GalleryAlbumPage() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activePhotoIndex, album.images.length]);
+  }, [activePhotoIndex, album?.images?.length]);
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center bg-white">
+        <p className="text-slate-400 font-bold uppercase tracking-wider animate-pulse">
+          Loading album photos...
+        </p>
+      </div>
+    );
+  }
 
   if (!album) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center">
         <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Album Not Found</h2>
-        <p className="text-slate-600 mb-6">The photo album you are looking for does not exist or has been removed.</p>
+        <p className="text-slate-600 mb-6">
+          The photo album you are looking for does not exist or has been removed.
+        </p>
         <Link
           to="/gallery"
           className="bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded flex items-center gap-2 transition"
@@ -74,7 +104,7 @@ export default function GalleryAlbumPage() {
             >
               <FaArrowLeft /> BACK TO GALLERY
             </Link>
-            
+
             <div className="space-y-2 max-w-3xl">
               <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
                 <FaCalendarAlt />
@@ -106,7 +136,6 @@ export default function GalleryAlbumPage() {
       {/* Photos Grid Section */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
-          
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
             {album.images.map((img, index) => (
               <motion.div
@@ -127,7 +156,6 @@ export default function GalleryAlbumPage() {
               </motion.div>
             ))}
           </div>
-
         </div>
       </section>
 

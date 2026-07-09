@@ -1,10 +1,33 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaImages, FaCalendarAlt } from "react-icons/fa";
 import { GALLERY_ALBUMS } from "@/constants/gallery";
-import headerBg from "@/assets/images/slide-outreach.png";
+import headerBg from "@/assets/images/hero.png";
+import api from "@/services/api";
 
 export default function GalleryPage() {
+  const [albums, setAlbums] = useState([]);
+
+  useEffect(() => {
+    async function loadAlbums() {
+      try {
+        const res = await api.get("/gallery/albums");
+        const mapped = (res.data.data || []).map((a) => ({
+          ...a,
+          id: a._id,
+          photosCount: a.images?.length || 0,
+        }));
+        console.log("Gallery albums loaded on frontend:", mapped);
+        setAlbums(mapped);
+      } catch (err) {
+        console.error("Failed to load albums:", err);
+        setAlbums([]);
+      }
+    }
+    loadAlbums();
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -43,7 +66,8 @@ export default function GalleryPage() {
               OUR MINISTRY GALLERY
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              Glance through our ministry's visual timeline. Experience the testimonies, joy, and relief captured during our outreaches, services, and community projects.
+              Glance through our ministry's visual timeline. Experience the testimonies, joy, and
+              relief captured during our outreaches, services, and community projects.
             </p>
           </motion.div>
         </div>
@@ -64,64 +88,69 @@ export default function GalleryPage() {
       {/* Album List section */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-          >
-            {GALLERY_ALBUMS.map((album) => (
-              <motion.div
-                key={album.id}
-                variants={itemVariants}
-                className="bg-white border border-slate-100/60 shadow-card hover:shadow-lg rounded-2xl overflow-hidden flex flex-col h-full group"
-              >
-                {/* Cover Image */}
-                <div className="relative h-56 bg-slate-900 overflow-hidden shrink-0">
-                  <img
-                    src={album.coverImage}
-                    alt={album.title}
-                    className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  
-                  {/* Photo count indicator */}
-                  <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                    <FaImages className="text-gold" />
-                    <span>{album.photosCount} Photos</span>
-                  </div>
-                </div>
+          {albums.length > 0 ? (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+            >
+              {albums.map((album) => (
+                <motion.div
+                  key={album.id}
+                  variants={itemVariants}
+                  className="bg-white border border-slate-100/60 shadow-card hover:shadow-lg rounded-2xl overflow-hidden flex flex-col h-full group"
+                >
+                  {/* Cover Image */}
+                  <div className="relative h-56 bg-slate-900 overflow-hidden shrink-0">
+                    <img
+                      src={album.coverImage}
+                      alt={album.title}
+                      className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
+                      loading="lazy"
+                    />
 
-                {/* Info details */}
-                <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-                      <FaCalendarAlt />
-                      <span>{album.date}</span>
+                    {/* Photo count indicator */}
+                    <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-bold shadow-sm">
+                      <FaImages className="text-gold" />
+                      <span>{album.photosCount} Photos</span>
                     </div>
-                    <Link to={`/gallery/${album.id}`}>
-                      <h3 className="font-extrabold text-slate-800 text-base md:text-lg uppercase hover:text-[#B91C1C] transition cursor-pointer">
-                        {album.title}
-                      </h3>
-                    </Link>
-                    <p className="text-slate-500 text-xs md:text-sm font-medium leading-relaxed">
-                      {album.description}
-                    </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-50">
-                    <Link
-                      to={`/gallery/${album.id}`}
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#B91C1C] hover:opacity-80"
-                    >
-                      VIEW ALBUM &rarr;
-                    </Link>
+                  {/* Info details */}
+                  <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
+                        <FaCalendarAlt />
+                        <span>{album.date}</span>
+                      </div>
+                      <Link to={`/gallery/${album.id}`}>
+                        <h3 className="font-extrabold text-slate-800 text-base md:text-lg uppercase hover:text-[#B91C1C] transition cursor-pointer">
+                          {album.title}
+                        </h3>
+                      </Link>
+                      <p className="text-slate-500 text-xs md:text-sm font-medium leading-relaxed">
+                        {album.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-slate-50">
+                      <Link
+                        to={`/gallery/${album.id}`}
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#B91C1C] hover:opacity-80"
+                      >
+                        VIEW ALBUM &rarr;
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="text-center py-20 text-slate-400 font-medium">
+              No gallery albums found.
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
-import headerBg from "@/assets/images/slide-outreach.png";
+import headerBg from "@/assets/images/hero.png";
+import api from "@/services/api";
+import { useToast } from "@/context/ToastContext";
 
 export default function ContactPage() {
+  const toast = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,14 +20,20 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submit contact form:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 5000);
+    try {
+      await api.post("/contact", formData);
+      setIsSubmitted(true);
+      toast.success("Message sent! Thank you for contacting Amend Your Ways.");
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      }, 5000);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Failed to send message. Please try again.");
+    }
   };
 
   return (

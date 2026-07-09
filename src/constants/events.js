@@ -10,7 +10,8 @@ export const EVENTS_DATA = [
     venue: "Rural Community Centre",
     time: "9:00 AM - 2:00 PM",
     description: "Reaching out with the gospel, food, clothes and love.",
-    details: "This community outreach is focused on visiting remote villages. We will distribute food packages, clothes, clean water relief, and medical aid, alongside sharing the good news of salvation. Volunteers will assist in sorting materials and ministering to families.",
+    details:
+      "This community outreach is focused on visiting remote villages. We will distribute food packages, clothes, clean water relief, and medical aid, alongside sharing the good news of salvation. Volunteers will assist in sorting materials and ministering to families.",
     image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600",
   },
   {
@@ -24,7 +25,8 @@ export const EVENTS_DATA = [
     venue: "Church Prayer Room",
     time: "6:00 PM - 7:30 PM",
     description: "A time of prayer and intercession for families and nations.",
-    details: "Join us in our weekly power-packed prayer meeting as we lift up families, local communities, and nations of the world before the throne of grace. We will participate in guided prayer sessions, warfare prayers, and quiet reflection.",
+    details:
+      "Join us in our weekly power-packed prayer meeting as we lift up families, local communities, and nations of the world before the throne of grace. We will participate in guided prayer sessions, warfare prayers, and quiet reflection.",
     image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=600",
   },
   {
@@ -38,7 +40,8 @@ export const EVENTS_DATA = [
     venue: "Community Welfare Hall",
     time: "10:00 AM - 2:00 PM",
     description: "Reaching out in love to widows and less privileged.",
-    details: "As part of our commitment to care for the vulnerable, this outreach will serve widows in our neighborhood. We will provide medical checkups, essential food items, and emotional and spiritual support. Volunteers are welcome to assist in counseling and distribution.",
+    details:
+      "As part of our commitment to care for the vulnerable, this outreach will serve widows in our neighborhood. We will provide medical checkups, essential food items, and emotional and spiritual support. Volunteers are welcome to assist in counseling and distribution.",
     image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=600",
   },
   {
@@ -52,7 +55,8 @@ export const EVENTS_DATA = [
     venue: "Main Community Center",
     time: "10:00 AM - 2:00 PM",
     description: "Providing school materials and support for children.",
-    details: "Help us prepare children from less-privileged backgrounds for the upcoming academic year. We will distribute school backpacks, stationery, writing books, and uniforms. Join hands with us to plant seeds of education and hope.",
+    details:
+      "Help us prepare children from less-privileged backgrounds for the upcoming academic year. We will distribute school backpacks, stationery, writing books, and uniforms. Join hands with us to plant seeds of education and hope.",
     image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600",
   },
 ];

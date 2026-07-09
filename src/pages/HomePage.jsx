@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   FaCrosshairs,
   FaBullseye,
@@ -60,46 +61,23 @@ const focusCards = [
   },
 ];
 
-const events = [
-  {
-    day: 18,
-    month: "MAY",
-    monthColor: "bg-green-600",
-    title: "Outreach to Rural Community",
-    venue: "Rural Community",
-    time: "9:00 AM - 2:00 PM",
-    description: "Reaching out with the gospel, food, clothes and love.",
-  },
-  {
-    day: 29,
-    month: "MAY",
-    monthColor: "bg-yellow-500",
-    title: "Prayer Meeting",
-    venue: "Church Prayer Room",
-    time: "6:00 PM - 7:30 PM",
-    description: "A time of prayer and intercession for families and nations.",
-  },
-  {
-    day: 15,
-    month: "JUN",
-    monthColor: "bg-red-600",
-    title: "Outreach to Widows",
-    venue: "Community Outreach",
-    time: "10:00 AM - 2:00 PM",
-    description: "Reaching out in love to widows and less privileged.",
-  },
-  {
-    day: 23,
-    month: "AUG",
-    monthColor: "bg-blue-600",
-    title: "Back to School Support",
-    venue: "Community Center",
-    time: "10:00 AM - 2:00 PM",
-    description: "Providing school materials and support for children.",
-  },
-];
+import api from "@/services/api";
 
 export default function Home() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const res = await api.get("/events");
+        // Limit to 4 events for the homepage feed
+        setEvents((res.data.data || []).slice(0, 4));
+      } catch (err) {
+        console.error("Failed to fetch events on homepage:", err);
+      }
+    }
+    fetchEvents();
+  }, []);
   return (
     <div className="flex flex-col w-full">
       {/* 1. HERO SECTION (Full viewport width carousel banner) */}

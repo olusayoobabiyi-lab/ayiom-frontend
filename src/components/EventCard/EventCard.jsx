@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { FaClock, FaMapMarkerAlt, FaSync } from "react-icons/fa";
+import { getEventDateString } from "@/utils/eventHelpers";
 
-const EventCard = ({ id, day, month, title, venue, time, description, monthColor = "bg-red-700" }) => {
+const EventCard = ({
+  id,
+  day,
+  month,
+  year,
+  title,
+  venue,
+  time,
+  description,
+  monthColor = "bg-red-700",
+  isRecurring = false,
+  recurrencePattern = "none",
+  isMultiDay = false,
+  endDay,
+  endMonth,
+  endYear,
+}) => {
   // Extract border color mapping from background color class if possible
   const getBorderColor = (bgClass) => {
     if (bgClass.includes("red")) return "border-l-red-600";
@@ -19,12 +36,19 @@ const EventCard = ({ id, day, month, title, venue, time, description, monthColor
       className={`flex bg-white rounded-lg shadow-sm border border-slate-100 border-l-4 ${getBorderColor(monthColor)} overflow-hidden h-full`}
     >
       {/* Date Column (Left) */}
-      <div className="w-[85px] bg-slate-50 flex flex-col items-center justify-center p-3 shrink-0 border-r border-slate-100">
-        <span className={`text-[10px] font-extrabold text-white px-2 py-0.5 rounded uppercase tracking-wider ${monthColor}`}>
-          {month}
+      <div className="w-[85px] bg-slate-50 flex flex-col items-center justify-center p-3 shrink-0 border-r border-slate-100 relative">
+        {isRecurring && (
+          <div className="absolute top-1 right-1 text-[8px] bg-gold/15 text-gold border border-gold/20 px-1 rounded flex items-center gap-0.5 font-black uppercase">
+            <FaSync className="animate-spin text-[6px]" style={{ animationDuration: "6s" }} /> Rec
+          </div>
+        )}
+        <span
+          className={`text-[9px] font-extrabold text-white px-2 py-0.5 rounded uppercase tracking-wider ${monthColor}`}
+        >
+          {isRecurring ? "REPEAT" : month}
         </span>
         <span className="text-3xl font-black text-slate-800 mt-1.5 leading-none">
-          {day}
+          {isRecurring ? "🔁" : day}
         </span>
       </div>
 
@@ -42,17 +66,30 @@ const EventCard = ({ id, day, month, title, venue, time, description, monthColor
               {title}
             </h4>
           )}
-          
-          {/* Time */}
-          <div className="flex items-center gap-1.5 mt-1.5 text-slate-500 text-[11px] font-semibold">
-            <FaClock className="text-slate-400 text-[10px]" />
-            <span>{time}</span>
+
+          {/* Time & Schedule */}
+          <div className="flex items-start gap-1.5 mt-1.5 text-slate-500 text-[10px] font-semibold leading-relaxed">
+            <FaClock className="text-slate-400 text-[9px] mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-slate-700">
+                {getEventDateString({
+                  day,
+                  month,
+                  year,
+                  isRecurring,
+                  recurrencePattern,
+                  isMultiDay,
+                  endDay,
+                  endMonth,
+                  endYear,
+                })}
+              </p>
+              <p className="text-slate-450 mt-0.5">{time}</p>
+            </div>
           </div>
 
           {/* Description */}
-          <p className="text-slate-500 text-xs mt-2 leading-relaxed line-clamp-2">
-            {description}
-          </p>
+          <p className="text-slate-500 text-xs mt-2 leading-relaxed line-clamp-2">{description}</p>
         </div>
 
         {/* Venue (Bottom) */}

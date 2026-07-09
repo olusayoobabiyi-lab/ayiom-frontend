@@ -1,12 +1,21 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaArrowLeft, FaClock, FaMapMarkerAlt, FaCalendarCheck, FaPaperPlane } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaClock,
+  FaMapMarkerAlt,
+  FaCalendarCheck,
+  FaPaperPlane,
+} from "react-icons/fa";
+import { getEventDateString } from "@/utils/eventHelpers";
 import { EVENTS_DATA } from "@/constants/events";
+import api from "@/services/api";
 
 export default function EventDetailPage() {
   const { id } = useParams();
-  const event = EVENTS_DATA.find((e) => e.id === id);
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,11 +25,41 @@ export default function EventDetailPage() {
   });
   const [isRegistered, setIsRegistered] = useState(false);
 
+  useEffect(() => {
+    async function fetchEventDetails() {
+      try {
+        setLoading(true);
+        const res = await api.get(`/events/${id}`);
+        setEvent(res.data.data);
+      } catch (err) {
+        console.error("Failed to load event details:", err);
+        // Fallback to static mock data if api fails
+        const matched = EVENTS_DATA.find((e) => e.id === id);
+        setEvent(matched);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEventDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center bg-white">
+        <p className="text-slate-400 font-bold uppercase tracking-wider animate-pulse">
+          Loading event details...
+        </p>
+      </div>
+    );
+  }
+
   if (!event) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center">
         <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Event Not Found</h2>
-        <p className="text-slate-600 mb-6">The event you are looking for does not exist or has passed.</p>
+        <p className="text-slate-600 mb-6">
+          The event you are looking for does not exist or has passed.
+        </p>
         <Link
           to="/events"
           className="bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded flex items-center gap-2 transition"
@@ -93,7 +132,6 @@ export default function EventDetailPage() {
       {/* Main Body */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16">
-          
           {/* Left Column: Event details */}
           <div className="lg:col-span-8 space-y-8">
             <div className="space-y-6">
@@ -104,38 +142,55 @@ export default function EventDetailPage() {
                 {event.details}
               </p>
               <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
-                We invite you, your friends, and your family to join us as we gather together to impact lives and share the love of Christ. If you would like to participate as a volunteer, please fill out the RSVP form on the right so our team can prepare for your arrival.
+                We invite you, your friends, and your family to join us as we gather together to
+                impact lives and share the love of Christ. If you would like to participate as a
+                volunteer, please fill out the RSVP form on the right so our team can prepare for
+                your arrival.
               </p>
             </div>
 
             {/* Quick Details Icons Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
               <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <span className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}>
+                <span
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}
+                >
                   <FaCalendarCheck />
                 </span>
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">Date</span>
-                  <span className="text-xs md:text-sm text-slate-800 font-bold">{event.month} {event.day}, {event.year}</span>
+                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">
+                    Date
+                  </span>
+                  <span className="text-xs md:text-sm text-slate-800 font-bold">
+                    {getEventDateString(event)}
+                  </span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <span className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}>
+                <span
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}
+                >
                   <FaClock />
                 </span>
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">Time</span>
+                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">
+                    Time
+                  </span>
                   <span className="text-xs md:text-sm text-slate-800 font-bold">{event.time}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <span className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}>
+                <span
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 ${event.monthColor}`}
+                >
                   <FaMapMarkerAlt />
                 </span>
                 <div>
-                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">Venue</span>
+                  <span className="block text-[10px] text-slate-400 font-extrabold uppercase">
+                    Venue
+                  </span>
                   <span className="text-xs md:text-sm text-slate-800 font-bold">{event.venue}</span>
                 </div>
               </div>
@@ -160,7 +215,8 @@ export default function EventDetailPage() {
                 >
                   <h4 className="font-bold text-sm">RSVP Submitted!</h4>
                   <p className="text-xs leading-relaxed">
-                    Thank you for registering to attend. We've reserved a spot for you and look forward to seeing you there!
+                    Thank you for registering to attend. We've reserved a spot for you and look
+                    forward to seeing you there!
                   </p>
                 </motion.div>
               ) : (
@@ -233,7 +289,6 @@ export default function EventDetailPage() {
               )}
             </div>
           </div>
-
         </div>
       </section>
     </div>

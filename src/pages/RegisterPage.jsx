@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUserPlus, FaHandshake, FaCheckCircle, FaPaperPlane } from "react-icons/fa";
 import headerBg from "@/assets/images/hero.png";
+import api from "@/services/api";
+import { useToast } from "@/context/ToastContext";
 
 export default function RegisterPage() {
   const [activeTab, setActiveTab] = useState("member"); // member | partner
@@ -27,6 +29,7 @@ export default function RegisterPage() {
     comments: "",
   });
 
+  const toast = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleMemberChange = (e) => {
@@ -39,36 +42,49 @@ export default function RegisterPage() {
     setPartnerForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (activeTab === "member") {
-      console.log("Submit Membership:", memberForm);
-    } else {
-      console.log("Submit Partnership:", partnerForm);
+    const payload =
+      activeTab === "member"
+        ? { type: "member", ...memberForm }
+        : { type: "partner", ...partnerForm };
+
+    try {
+      await api.post("/registrations", payload);
+      setIsSubmitted(true);
+      toast.success(
+        activeTab === "member"
+          ? "Membership application submitted successfully!"
+          : "Partnership registration submitted successfully!"
+      );
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setMemberForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          address: "",
+          dob: "",
+          gender: "",
+          comments: "",
+        });
+        setPartnerForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          partnershipType: "financial",
+          frequency: "monthly",
+          comments: "",
+        });
+      }, 5000);
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        err.response?.data?.message || "Failed to submit registration. Please try again."
+      );
     }
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setMemberForm({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        address: "",
-        dob: "",
-        gender: "",
-        comments: "",
-      });
-      setPartnerForm({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        partnershipType: "financial",
-        frequency: "monthly",
-        comments: "",
-      });
-    }, 5000);
   };
 
   return (
@@ -96,7 +112,9 @@ export default function RegisterPage() {
               JOIN OUR MINISTRY
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              Take the next step in your spiritual journey. Whether you wish to become a committed member of our local church family or partner with us to spread the gospel globally, we welcome you.
+              Take the next step in your spiritual journey. Whether you wish to become a committed
+              member of our local church family or partner with us to spread the gospel globally, we
+              welcome you.
             </p>
           </motion.div>
         </div>
@@ -117,11 +135,13 @@ export default function RegisterPage() {
       {/* Forms Section */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1000px] mx-auto px-6">
-          
           {/* Tab buttons */}
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-12 border-b border-slate-100 pb-8">
             <button
-              onClick={() => { setActiveTab("member"); setIsSubmitted(false); }}
+              onClick={() => {
+                setActiveTab("member");
+                setIsSubmitted(false);
+              }}
               className={`py-4 px-6 rounded-xl text-xs md:text-sm font-extrabold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border ${
                 activeTab === "member"
                   ? "bg-[#B91C1C] text-white border-[#B91C1C] shadow-md"
@@ -131,7 +151,10 @@ export default function RegisterPage() {
               <FaUserPlus /> BECOME A MEMBER
             </button>
             <button
-              onClick={() => { setActiveTab("partner"); setIsSubmitted(false); }}
+              onClick={() => {
+                setActiveTab("partner");
+                setIsSubmitted(false);
+              }}
               className={`py-4 px-6 rounded-xl text-xs md:text-sm font-extrabold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 border ${
                 activeTab === "partner"
                   ? "bg-[#B91C1C] text-white border-[#B91C1C] shadow-md"
@@ -155,8 +178,10 @@ export default function RegisterPage() {
                   Submission Successful!
                 </h3>
                 <p className="text-slate-600 text-xs md:text-sm font-medium leading-relaxed max-w-md">
-                  Thank you for taking this step to join hands with us! Our ministry team has received your registration details for the{" "}
-                  <strong>{activeTab === "member" ? "Membership" : "Partnership"}</strong> program. We will contact you soon.
+                  Thank you for taking this step to join hands with us! Our ministry team has
+                  received your registration details for the{" "}
+                  <strong>{activeTab === "member" ? "Membership" : "Partnership"}</strong> program.
+                  We will contact you soon.
                 </p>
               </motion.div>
             ) : (
@@ -181,7 +206,9 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">First Name</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          First Name
+                        </label>
                         <input
                           type="text"
                           name="firstName"
@@ -193,7 +220,9 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Last Name</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Last Name
+                        </label>
                         <input
                           type="text"
                           name="lastName"
@@ -208,7 +237,9 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Email Address</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Email Address
+                        </label>
                         <input
                           type="email"
                           name="email"
@@ -220,7 +251,9 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Phone Number</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Phone Number
+                        </label>
                         <input
                           type="tel"
                           name="phone"
@@ -235,7 +268,9 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Date of Birth</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Date of Birth
+                        </label>
                         <input
                           type="date"
                           name="dob"
@@ -246,7 +281,9 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Gender</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Gender
+                        </label>
                         <select
                           name="gender"
                           required
@@ -262,7 +299,9 @@ export default function RegisterPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Residential Address</label>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Residential Address
+                      </label>
                       <input
                         type="text"
                         name="address"
@@ -275,7 +314,9 @@ export default function RegisterPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Prayer Requests / Comments</label>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Prayer Requests / Comments
+                      </label>
                       <textarea
                         name="comments"
                         rows={4}
@@ -307,13 +348,16 @@ export default function RegisterPage() {
                         Partnership Registration Form
                       </h3>
                       <p className="text-slate-500 text-[11px] font-semibold mt-1">
-                        Partner with us financially, through prayer support, or as a field volunteer.
+                        Partner with us financially, through prayer support, or as a field
+                        volunteer.
                       </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">First Name</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          First Name
+                        </label>
                         <input
                           type="text"
                           name="firstName"
@@ -325,7 +369,9 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Last Name</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Last Name
+                        </label>
                         <input
                           type="text"
                           name="lastName"
@@ -340,7 +386,9 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Email Address</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Email Address
+                        </label>
                         <input
                           type="email"
                           name="email"
@@ -352,7 +400,9 @@ export default function RegisterPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Phone Number</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Phone Number
+                        </label>
                         <input
                           type="tel"
                           name="phone"
@@ -367,7 +417,9 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Partnership Type</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Partnership Type
+                        </label>
                         <select
                           name="partnershipType"
                           required
@@ -381,7 +433,9 @@ export default function RegisterPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Partnership Frequency</label>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                          Partnership Frequency
+                        </label>
                         <select
                           name="frequency"
                           required
@@ -397,7 +451,9 @@ export default function RegisterPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Message / Comments</label>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Message / Comments
+                      </label>
                       <textarea
                         name="comments"
                         rows={4}
@@ -419,7 +475,6 @@ export default function RegisterPage() {
               </AnimatePresence>
             )}
           </div>
-
         </div>
       </section>
     </div>

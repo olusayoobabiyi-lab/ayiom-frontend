@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaPhone, FaChevronRight } from "react-icons/fa";
 import { ROUTES } from "@/constants/routes";
 import heroImage from "@/assets/images/hero.png";
-import worshipImage from "@/assets/images/slide-worship.png";
-import outreachImage from "@/assets/images/slide-outreach.png";
+
+import api from "@/services/api";
 
 const DEFAULT_SLIDES = [
   {
@@ -13,20 +13,26 @@ const DEFAULT_SLIDES = [
     title: "AMEND YOUR WAYS INT'L OUTREACH MINISTRY",
     subtitle: "",
   },
-  {
-    image: worshipImage,
-    title: "JOIN OUR WORSHIP",
-    subtitle: "EXPERIENCE GOD'S PRESENCE",
-  },
-  {
-    image: outreachImage,
-    title: "IMPACTING COMMUNITIES",
-    subtitle: "DEMONSTRATING GOD'S LOVE",
-  },
 ];
 
-const Hero = ({ slides = DEFAULT_SLIDES }) => {
+const Hero = () => {
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    async function fetchSlides() {
+      try {
+        const res = await api.get("/homepage");
+        const carousel = res.data.data?.heroCarousel || [];
+        if (carousel.length > 0) {
+          setSlides(carousel);
+        }
+      } catch (err) {
+        console.error("Failed to load hero banner slides:", err);
+      }
+    }
+    fetchSlides();
+  }, []);
 
   // Auto-advance slides every 5 seconds
   useEffect(() => {
@@ -37,7 +43,7 @@ const Hero = ({ slides = DEFAULT_SLIDES }) => {
   }, [slides.length]);
 
   return (
-    <div className="relative w-full h-[500px] md:h-[700px] xl:h-[860px] overflow-hidden bg-slate-950 flex items-center">
+    <div className="relative w-full h-[600px] md:h-[750px] xl:h-[950px] overflow-hidden bg-slate-950 flex items-center">
       {/* Background Carousel */}
       <div className="absolute inset-0 w-full h-full z-0">
         <AnimatePresence mode="wait">
@@ -46,7 +52,7 @@ const Hero = ({ slides = DEFAULT_SLIDES }) => {
             src={slides[current].image}
             alt="Carousel Background"
             initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 0.65, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.2 }}
             className="absolute inset-0 h-full w-full object-cover object-center"
@@ -55,7 +61,7 @@ const Hero = ({ slides = DEFAULT_SLIDES }) => {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/75 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent z-10" />
 
       {/* Content Container */}
       <div className="relative z-20 w-full px-6 md:px-14 lg:px-24 flex flex-col xl:flex-row xl:items-center xl:justify-between h-full pt-[100px] pb-12 xl:py-0">

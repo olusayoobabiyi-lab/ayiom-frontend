@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { EVENTS_DATA, CATEGORY_LABELS } from "@/constants/events";
 import EventCard from "@/components/EventCard/EventCard";
-import headerBg from "@/assets/images/slide-outreach.png";
+import headerBg from "@/assets/images/hero.png";
+import api from "@/services/api";
 
 export default function EventsPage() {
+  const [events, setEvents] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const filteredEvents = activeCategory === "all"
-    ? EVENTS_DATA
-    : EVENTS_DATA.filter((e) => e.category === activeCategory);
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const res = await api.get("/events");
+        const mapped = (res.data.data || []).map((e) => ({
+          ...e,
+          id: e._id,
+        }));
+        setEvents(mapped);
+      } catch (err) {
+        console.error("Failed to load events:", err);
+        setEvents([]);
+      }
+    }
+    loadEvents();
+  }, []);
+
+  const filteredEvents =
+    activeCategory === "all" ? events : events.filter((e) => e.category === activeCategory);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -49,7 +67,8 @@ export default function EventsPage() {
               UPCOMING EVENTS
             </h1>
             <p className="text-slate-300 text-xs md:text-sm xl:text-base leading-relaxed font-medium">
-              Join us in our upcoming programs, prayer services, and community outreach events. Together we can impact lives.
+              Join us in our upcoming programs, prayer services, and community outreach events.
+              Together we can impact lives.
             </p>
           </motion.div>
         </div>
@@ -70,7 +89,6 @@ export default function EventsPage() {
       {/* Main Grid & Filters */}
       <section className="w-full py-16 bg-white">
         <div className="w-full max-w-[1700px] mx-auto px-6 md:px-12 lg:px-16 space-y-12">
-          
           {/* Category Filter Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-3 border-b border-slate-100 pb-8">
             {Object.entries(CATEGORY_LABELS).map(([key, value]) => (
@@ -107,7 +125,6 @@ export default function EventsPage() {
               <p className="text-slate-500 font-medium">No events found in this category.</p>
             </div>
           )}
-
         </div>
       </section>
     </div>

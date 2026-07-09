@@ -11,9 +11,7 @@ const FocusCard = ({ icon, title, description }) => {
         <h4 className="text-sm font-extrabold uppercase tracking-wider text-white leading-tight">
           {title}
         </h4>
-        <p className="text-xs text-slate-200 mt-1 leading-snug">
-          {description}
-        </p>
+        <p className="text-xs text-slate-200 mt-1 leading-snug">{description}</p>
       </div>
     </div>
   );

@@ -24,7 +24,9 @@ export const ROUTES = {
   ADMIN_CALENDAR: "/admin/calendar",
   ADMIN_HOMEPAGE: "/admin/homepage",
   ADMIN_ABOUT: "/admin/about",
+  ADMIN_INQUIRIES: "/admin/inquiries",
   ADMIN_SETTINGS: "/admin/settings",
+  ADMIN_ACTIVITY_LOG: "/admin/activity-log",
 
   NOT_FOUND: "*",
 };

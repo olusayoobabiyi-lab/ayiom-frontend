@@ -24,6 +24,7 @@ export default [
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      "react-hooks/exhaustive-deps": "off",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-vars": "warn",

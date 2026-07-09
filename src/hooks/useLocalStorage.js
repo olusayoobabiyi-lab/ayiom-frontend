@@ -5,7 +5,11 @@ export const useLocalStorage = (key, initialValue) => {
   const [value, setValue] = useState(() => {
     const stored = storage.getItem(key);
     if (stored === null || stored === undefined) return initialValue;
-    try { return JSON.parse(stored); } catch { return stored; }
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return stored;
+    }
   });
 
   useEffect(() => {

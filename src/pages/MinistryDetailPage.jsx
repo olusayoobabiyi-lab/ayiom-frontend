@@ -3,6 +3,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaCheckCircle, FaPaperPlane } from "react-icons/fa";
 import { MINISTRIES_DATA } from "@/constants/ministries";
+import api from "@/services/api";
+import { useToast } from "@/context/ToastContext";
 
 // Additional detailed data for each ministry (focus areas, objectives, etc.)
 const DETAILS_MAP = {
@@ -169,6 +171,7 @@ export default function MinistryDetailPage() {
   const { id } = useParams();
   const ministry = MINISTRIES_DATA.find((m) => m.id === id);
   const extraDetails = DETAILS_MAP[id] || { objectives: [], faqs: [] };
+  const toast = useToast();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -199,15 +202,20 @@ export default function MinistryDetailPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, this would dispatch to the API
-    console.log("Submit volunteer request:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", interest: id || "", message: "" });
-    }, 5000);
+    try {
+      await api.post("/ministry", formData);
+      setIsSubmitted(true);
+      toast.success("Thank you for getting involved! We have received your inquiry.");
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", phone: "", interest: id || "", message: "" });
+      }, 5000);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Failed to submit request. Please try again.");
+    }
   };
 
   return (

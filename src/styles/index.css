@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -67,7 +67,7 @@
 }
 
 .calendar-dot--prayer {
-  background-color: #D4AF37;
+  background-color: #d4af37;
 }
 
 .calendar-dot--widows {
@@ -93,4 +93,159 @@
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ─── Premium Admin Palette variables ─── */
+:root {
+  /* Premium Light Mode Palette */
+  --admin-bg: #f4f6f9;
+  --admin-card: #ffffff;
+  --admin-sidebar: #202940; /* High contrast dark sidebar */
+  --admin-border: #e2e8f0;
+  --admin-text-main: #202940; /* User's deep blue-slate for main text */
+  --admin-text-sub: #4b4038; /* User's dark brown-gray for subtext */
+
+  --accent-taupe: #9a8678;
+  --accent-sand: #caaa98;
+  --accent-burgundy: #280905;
+}
+
+.dark {
+  /* Premium Dark Mode Palette */
+  --admin-bg: #1a2035; /* Denser blue-slate */
+  --admin-card: #202940; /* User's theme color for dark card bg */
+  --admin-sidebar: #151b2e; /* Even darker sidebar */
+  --admin-border: #2d3758;
+  --admin-text-main: #ffffff;
+  --admin-text-sub: #caaa98; /* User's light sand color for text labels */
+
+  --accent-taupe: #9a8678;
+  --accent-sand: #caaa98;
+  --accent-burgundy: #280905;
+}
+
+.admin-layout-wrapper {
+  background-color: var(--admin-bg) !important;
+}
+
+/* Sidebar Contrast Controls */
+.admin-layout-wrapper aside {
+  background-color: var(--admin-sidebar) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.admin-layout-wrapper aside h3,
+.admin-layout-wrapper aside p,
+.admin-layout-wrapper aside span,
+.admin-layout-wrapper aside button {
+  color: #ffffff !important;
+}
+
+.admin-layout-wrapper aside nav a:not(.bg-maroon) {
+  color: #94a3b8 !important;
+}
+
+.admin-layout-wrapper aside nav a:not(.bg-maroon):hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+}
+
+/* Main Panel Containers */
+.admin-layout-wrapper main {
+  background-color: var(--admin-bg) !important;
+}
+
+/* Titles and Headers */
+.admin-layout-wrapper main h1,
+.admin-layout-wrapper main h2,
+.admin-layout-wrapper main h3,
+.admin-layout-wrapper main h4,
+.admin-layout-wrapper main th,
+.admin-layout-wrapper main .text-white,
+.admin-layout-wrapper main .font-bold.text-white,
+.admin-layout-wrapper main .font-extrabold.text-white {
+  color: var(--admin-text-main) !important;
+}
+
+/* Description texts and table cells */
+.admin-layout-wrapper main p,
+.admin-layout-wrapper main td,
+.admin-layout-wrapper main .text-slate-350,
+.admin-layout-wrapper main .text-slate-300,
+.admin-layout-wrapper main .text-slate-400 {
+  color: var(--admin-text-sub) !important;
+}
+
+/* Card backgrounds */
+.admin-layout-wrapper main .bg-slate-950,
+.admin-layout-wrapper main .bg-slate-900,
+.admin-layout-wrapper main .bg-slate-950\/30 {
+  background-color: var(--admin-card) !important;
+}
+
+/* Table rows on hover */
+.admin-layout-wrapper main .hover\:bg-slate-900\/30:hover {
+  background-color: rgba(154, 134, 120, 0.08) !important;
+}
+
+/* Borders and dividers */
+.admin-layout-wrapper main .border-slate-800,
+.admin-layout-wrapper main .border-slate-850,
+.admin-layout-wrapper main .border-slate-900,
+.admin-layout-wrapper main .border-slate-800\/80,
+.admin-layout-wrapper main .divide-slate-850\/60 > * {
+  border-color: var(--admin-border) !important;
+}
+
+/* Inputs, Textareas, Select elements */
+.admin-layout-wrapper main input,
+.admin-layout-wrapper main textarea,
+.admin-layout-wrapper main select,
+.admin-layout-wrapper main .bg-slate-900.border.border-slate-800 {
+  background-color: var(--admin-bg) !important;
+  color: var(--admin-text-main) !important;
+  border-color: var(--admin-border) !important;
+}
+
+.admin-layout-wrapper main input::placeholder,
+.admin-layout-wrapper main textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Modals overlays & modal cards */
+.admin-layout-wrapper .fixed.inset-0.bg-black\/75 {
+  background-color: rgba(32, 41, 64, 0.7) !important; /* Premium dark blue-slate overlay */
+  backdrop-filter: blur(4px);
+}
+
+.admin-layout-wrapper .fixed.inset-0 .bg-slate-900 {
+  background-color: var(--admin-card) !important;
+  border-color: var(--admin-border) !important;
+}
+
+/* Custom premium buttons with requested accents */
+.admin-layout-wrapper button.bg-maroon,
+.admin-layout-wrapper link.bg-maroon,
+.admin-layout-wrapper a.bg-maroon {
+  background-color: var(--accent-burgundy) !important;
+  border-color: var(--accent-sand) !important;
+}
+
+.admin-layout-wrapper button.bg-maroon:hover,
+.admin-layout-wrapper link.bg-maroon:hover,
+.admin-layout-wrapper a.bg-maroon:hover {
+  background-color: var(--accent-taupe) !important;
+}
+
+/* Gold/Sand Highlights */
+.admin-layout-wrapper .text-gold {
+  color: var(--accent-sand) !important;
+}
+
+.admin-layout-wrapper .border-gold\/25 {
+  border-color: rgba(202, 170, 152, 0.25) !important;
+}
+
+.admin-layout-wrapper .bg-gold\/15 {
+  background-color: rgba(202, 170, 152, 0.15) !important;
 }
