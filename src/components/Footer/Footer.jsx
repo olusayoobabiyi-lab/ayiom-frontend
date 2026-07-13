@@ -44,7 +44,7 @@ const Footer = () => {
             {/* Social Icons Row */}
             <div className="flex items-center gap-3">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61581780725028"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-90 transition shadow-sm"
@@ -52,21 +52,21 @@ const Footer = () => {
                 <FaFacebookF className="text-sm" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@AmendYourWaysOutreach"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:opacity-90 transition shadow-sm"
               >
                 <FaYoutube className="text-sm" />
               </a>
-              <a
+              {/* <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white flex items-center justify-center hover:opacity-90 transition shadow-sm"
               >
                 <FaInstagram className="text-sm" />
-              </a>
+              </a> */}
             </div>
           </div>
 
