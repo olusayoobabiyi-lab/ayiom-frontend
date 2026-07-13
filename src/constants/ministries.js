@@ -8,7 +8,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#8B1E1E]",
     titleColor: "text-[#8B1E1E]",
     lineColor: "bg-[#8B1E1E]",
-    image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/uploads/331fc722-fdfb-4ac3-b195-908cfc1f7ab5.jpeg",
   },
   {
     id: "Vocational-Training",
@@ -19,7 +20,7 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#D97706]",
     titleColor: "text-[#D97706]",
     lineColor: "bg-[#D97706]",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600",
+    image: "https://media.amendyourwaysoutreach.org/Ministries_pics/vocational%20training.png",
   },
   // {
   //   id: "discipleship",
@@ -40,7 +41,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#1E3A8A]",
     titleColor: "text-[#1E3A8A]",
     lineColor: "bg-[#1E3A8A]",
-    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/Ministries_pics/WhatsApp%20Image%202026-07-12%20at%206.43.48%20PM%20(2).jpeg",
   },
   {
     id: "school-support",
@@ -51,7 +53,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#16A34A]",
     titleColor: "text-[#16A34A]",
     lineColor: "bg-[#16A34A]",
-    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/Ministries_pics/WhatsApp%20Image%202026-07-13%20at%209.03.54%20AM%20(2).jpeg",
   },
   {
     id: "widows-care",
@@ -62,7 +65,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#7E22CE]",
     titleColor: "text-[#7E22CE]",
     lineColor: "bg-[#7E22CE]",
-    image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/uploads/453b2bd0-9214-4ebb-8b94-bd09a67f72ae.jpeg",
   },
   {
     id: "orphans-care",
@@ -73,7 +77,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#DC2626]",
     titleColor: "text-[#DC2626]",
     lineColor: "bg-[#DC2626]",
-    image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/Ministries_pics/WhatsApp%20Image%202026-07-13%20at%209.05.53%20AM.jpeg",
   },
   {
     id: "prayer-intercession",
@@ -84,7 +89,8 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#2563EB]",
     titleColor: "text-[#2563EB]",
     lineColor: "bg-[#2563EB]",
-    image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/Ministries_pics/WhatsApp%20Image%202026-07-13%20at%209.16.38%20AM.jpeg",
   },
   {
     id: "volunteer-partnership",
@@ -95,6 +101,7 @@ export const MINISTRIES_DATA = [
     iconColor: "bg-[#B45309]",
     titleColor: "text-[#B45309]",
     lineColor: "bg-[#B45309]",
-    image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600",
+    image:
+      "https://media.amendyourwaysoutreach.org/Ministries_pics/WhatsApp%20Image%202026-07-12%20at%206.43.47%20PM%20(2).jpeg",
   },
 ];
