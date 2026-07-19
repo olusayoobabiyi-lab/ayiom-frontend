@@ -69,7 +69,7 @@ const Footer = () => {
                 <FaInstagram className="text-sm" />
               </a> */}
               <a
-                href="https://wa.me/2348168804973"
+                href="https://wa.me/2348168804873"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:opacity-90 transition shadow-sm"
@@ -175,7 +175,7 @@ const Footer = () => {
               <div className="flex gap-3">
                 <FaPhone className="text-gold mt-0.5 shrink-0" />
                 <div className="flex flex-col">
-                  <span>+2348168804973</span>
+                  <span>+2348168804873</span>
                   <span>+2348062862967</span>
                   <span>+2349032598186</span>
                 </div>
