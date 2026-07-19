@@ -6,6 +6,7 @@ import {
   FaPhone,
   FaEnvelope,
   FaMapMarkerAlt,
+  FaWhatsapp,
   // FaHeart,
 } from "react-icons/fa";
 import { ROUTES } from "@/constants/routes";
@@ -67,6 +68,14 @@ const Footer = () => {
               >
                 <FaInstagram className="text-sm" />
               </a> */}
+              <a
+                href="https://wa.me/2348168804973"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:opacity-90 transition shadow-sm"
+              >
+                <FaWhatsapp className="text-sm" />
+              </a>
             </div>
           </div>
 
